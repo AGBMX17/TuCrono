@@ -1,49 +1,48 @@
 <!DOCTYPE html>
 <html>
-<head><title>Cronómetro</title><meta charset="UTF-8">
-<script type="text/javascript" src="zepto.min.js" > </script>
-<script type="text/javascript" src="touch.js"></script>
-<script type="text/javascript">
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <title>Tu Crono</title>
+    <script type="text/javascript" src="zepto.min.js"> </script>
+    <script type="text/javascript">
   $(function(){
     localStorage.c = (localStorage.c || "0.00");
-    localStorage.texto = (localStorage.texto || "");
+    localStorage.times = (localStorage.times || "");
+    $("#timestamp").html(localStorage.times);
 
     var t, cl = $("#crono");
-    var lst = $("#lista");
 
-    function sumar()    { localStorage.texto = lst.append((+localStorage.c).toFixed(2)) + lst.append("\n");};
-    function mostrar2() { lst.val(localStorage.texto);};
-    function incr()     { localStorage.c = +localStorage.c + 0.01; };
-    function mostrar()  { cl.html((+localStorage.c).toFixed(2)); };	
-    function arrancar() { t=setInterval(function(){incr(); mostrar()}, 10);};	
-    function parar()    { clearInterval(t);  t=undefined; sumar(); mostrar2();};
-    function cambiar()  { if (!t) arrancar(); else parar();};
+    function incr()     { localStorage.c = +localStorage.c + 0.01; }
+    function mostrar()  { cl.html((+localStorage.c).toFixed(2)); };
+    function arrancar() { t=setInterval(function(){incr(); mostrar()}, 10);};
+    function parar()    { clearInterval(t);  t=undefined; };
+    
+    function cambiar()  { if (!t)
+      arrancar();
+     else {
+       localStorage.times+="<li>"+(+localStorage.c).toFixed(2) +" segundos</li>";
+       $("#timestamp").html(localStorage.times); parar(); }
+    };
 
-	
     $("#cambiar").on('click', cambiar);
-    $("#inicializar").on('click', function(){ localStorage.c="0.00"; mostrar(); $("#lista").empty();});
+    $("#inicializar").on('click', function(){ 
+      if (!t){
+        localStorage.c="0.00";
+        localStorage.times="";
+        $("#timestamp").html("");mostrar();
+      }
+    });
     mostrar();
-
-    //funciones táctiles
-    var tocar = $("#cuerpo");
-    tocar.on("touchstart", cambiar);
-    tocar.on("swipeRight", function(){ localStorage.c="0.00"; mostrar(); $("lista").empty();});
-    tocar.on("swipeLeft", function(){ localStorage.c="0.00"; mostrar(); $("lista").empty();});
-	
   });
-</script>
-</head>
-<body id="cuerpo">
-<h2>Cronómetro</h2>
-
-<h3><span id="crono"> 0.00 </span> segundos </h3>
-
-<button type="button" id="cambiar"> Arrancar/Parar </button>
-<button type="button" id="inicializar">  Inicializar </button>
-<br>
-<br>
-<br>
-<div>Paradas:</div>
-<p id="lista"></p>
-</body>
+</script> </head>
+  <body>
+    <h2>Cronómetro</h2>
+    <h3><span id="crono"> 0.000 </span> segundos </h3>
+    <button type="button" id="cambiar"> arrancar/parar </button> <button type="button"
+      id="inicializar"> inicializar </button><br>
+    <br>
+    <ul id="timestamp">
+    </ul>
+    
+  </body>
 </html>
