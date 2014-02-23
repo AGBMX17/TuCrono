@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<widget xmlns = "http://www.w3.org/ns/widgets"
+    xmlns:gap = "http://phonegap.com/ns/1.0"
+    id        = "com.phonegap.example"
+    version   = "2.0.0">
+
+<name>TuCrono</name>
+
+<description>
+Básica e intuitiva, TuCrono no necesita presentaciones.
+</description>
+
+<author email="agbmx17@gmail.com">
+Alberto Gómez
+</author>
+
+<icon src="icon.png" />
+
+</widget>
